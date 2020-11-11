@@ -5,12 +5,25 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Game from './game';
 import ShoppingList from './shopping';
+import Clock from './clock';
+import Toggle from './Toggle';
+import NumberList from './list';
 
+
+const numbers = [
+  {name:'1n', id:1}, 
+  {name:'2n', id:2}, 
+  {name:'3n', id:3}, 
+  {name:'4n', id:4},
+  {name:'5n', id:5}];
 
 ReactDOM.render(
   <div>
-  <Game />
-  <ShoppingList name={"dsa"}/>
+  <Game />,
+  <ShoppingList name={"dsa"} />,
+  <Clock />,
+  <Toggle />,
+  <NumberList numbers={numbers} />,
   </div>,
   document.getElementById('root'),
 );

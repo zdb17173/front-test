@@ -74,14 +74,173 @@ setInterval(tick, 1000);
 
 # 组件
 
-组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。
+组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。以下两种方式都可以
 ```
 class Welcome extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}</h1>;
   }
 }
+
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
 ```
+
+组件的组合,组件可以在其输出中引用其他组件。这就可以让我们用同一组件来抽象出任意层次的细节。按钮，表单，对话框，甚至整个屏幕的内容：在 React 应用程序中，这些通常都会以组件的形式表示。
+```
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Welcome name="Sara" />
+      <Welcome name="Cahal" />
+      <Welcome name="Edite" />
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+props的只读性
+
+所有 React 组件都必须像纯函数一样保护它们的 props 不被更改。
+```
+//纯函数，多次调用下相同的入参始终返回相同的结果。
+function sum(a, b) {
+  return a + b;
+}
+//不是纯函数，因为它更改了自己的入参
+function withdraw(account, amount) {
+  account.total -= amount;
+}
+```
+
+
+# state & 生命周期
+
+组件的生命周期可分成三个状态：
+
+Mounting：已插入真实 DOM，Updating：正在被重新渲染，Unmounting：已移出真实 DOM。
+
+以下是可override的react函数：
+- constructor 初始化函数
+
+- componentWillMount 在渲染前调用,在客户端也在服务端。
+
+- componentDidMount : 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+
+- componentWillReceiveProps 在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
+
+- shouldComponentUpdate 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。
+可以在你确认不需要更新组件时使用。
+
+- componentWillUpdate在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
+
+- componentDidUpdate 在组件完成更新后立即调用。在初始化时不会被调用。
+
+- componentWillUnmount在组件从 DOM 中移除之前立刻被调用。
+
+可参考clock.js了解如何使用以上生命周期来创建定时器和停止定时器
+
+
+
+正确使用state的方式：
+
+使用setState
+```
+// Wrong 不会触发重新渲染
+this.state.comment = 'Hello';
+
+// Correct 会触发重新渲染
+this.setState({comment: 'Hello'});
+```
+
+state更新可能是异步的
+```
+// Wrong 此代码可能会无法更新计数器
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+
+// Correct =>函数用法 
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+
+// Correct 普通函数用法
+this.setState(function(state, props) {
+  return {
+    counter: state.counter + props.increment
+  };
+});
+```
+
+# 事件处理
+
+- React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
+- 使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。
+
+```
+传统的返回false就可以不触发
+<a href="#" onclick="console.log('The link was clicked.'); return false">
+  Click me
+</a>
+
+react中需要这样写
+function ActionLink() {
+  function handleClick(e) {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  );
+}
+```
+具体可参考Toggle.js，多种不同的事件传参方式，以及this和bind的用法
+```
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+```
+
+# 条件渲染
+
+使用&&运算符进行条件渲染。
+```
+function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 &&
+        <h2>
+          You have {unreadMessages.length} unread messages.
+        </h2>
+      }
+    </div>
+  );
+}
+
+const messages = ['React', 'Re: React', 'Re:Re: React'];
+ReactDOM.render(
+  <Mailbox unreadMessages={messages} />,
+  document.getElementById('root')
+);
+```
+
 
 # 拷贝
 

@@ -1,4 +1,5 @@
-import React from 'react';
+"use strict";
+import React, { StrictMode } from 'react';
 
   //普通react组件写法
   class Square extends React.Component {
