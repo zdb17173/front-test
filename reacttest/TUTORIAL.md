@@ -72,7 +72,7 @@ function tick() {
 setInterval(tick, 1000);
 ```
 
-# 组件
+# 组件 [link](https://react.docschina.org/docs/components-and-props.html)
 
 组件允许你将 UI 拆分为独立可复用的代码片段，并对每个片段进行独立构思。以下两种方式都可以
 ```
@@ -126,7 +126,7 @@ function withdraw(account, amount) {
 ```
 
 
-# state & 生命周期
+# state & 生命周期 [link](https://react.docschina.org/docs/state-and-lifecycle.html)
 
 组件的生命周期可分成三个状态：
 
@@ -185,7 +185,7 @@ this.setState(function(state, props) {
 });
 ```
 
-# 事件处理
+# 事件处理 [link](https://react.docschina.org/docs/handling-events.html)
 
 - React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
 - 使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。
@@ -216,7 +216,7 @@ function ActionLink() {
 <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 ```
 
-# 条件渲染
+# 条件渲染 [link](https://react.docschina.org/docs/conditional-rendering.html)
 
 使用&&运算符进行条件渲染。
 ```
@@ -240,6 +240,62 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+# 列表 [link](https://react.docschina.org/docs/lists-and-keys.html)
+
+具体使用可以参考list.js。可以通过使用 {} 在 JSX 内构建一个元素集合。在使用React的列表时，应为每个列表中的组件增加一个key。
+
+
+# form表单
+
+在React中，会将Form表单转化为一个受控组件，用state来控制所有数值变化。对于受控组件来说，输入的值始终由 React 的 state 驱动。你也可以将 value 传递给其他 UI 元素，或者通过其他事件处理函数重置，但这意味着你需要编写更多的代码。
+
+```
+class EssayForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '请撰写一篇关于你喜欢的 DOM 元素的文章.'
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('提交的文章: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          文章:
+          <textarea value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="提交" />
+      </form>
+    );
+  }
+}
+```
+
+# 状态提升 [link](https://react.docschina.org/docs/lifting-state-up.html)
+
+通常，多个组件需要反映相同的变化数据，这时我们建议将共享状态提升到最近的共同父组件中去。
+
+状态提升需要将state提升到多个组件的共同父组件，调试起来需要插件辅助，具体可参考：https://github.com/facebook/react/tree/master/packages/react-devtools
+
+具体可参考Temperature.js
+
+
+# 组合和继承
+
 
 
 # 拷贝
