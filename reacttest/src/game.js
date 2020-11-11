@@ -1,5 +1,4 @@
-"use strict";
-import React, { StrictMode } from 'react';
+import React from 'react';
 
   //普通react组件写法
   class Square extends React.Component {
@@ -112,7 +111,7 @@ import React, { StrictMode } from 'react';
     constructor(props) {
         super(props);
         this.state = {}
-      }
+    }
 
 
     render() {
