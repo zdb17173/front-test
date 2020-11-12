@@ -43,10 +43,11 @@ function Clock(){
         () => setNow(new Date()),
         1000
       );
+    //console.log("startInterval["+ timerID +"]");
     useEffect(() => {
          
         return () => {
-            // console.log("clearInterval["+ timerID +"]");
+            //console.log("clearInterval["+ timerID +"]");
             clearInterval(timerID);
         };
       });
@@ -60,11 +61,15 @@ function Clock(){
 
 
 function Count() {
+  const [showClock, setShowClock] = useState(false);
   return (
     <div>
         <CountHook />
         <CountReact />
-        <Clock />
+        {
+        showClock? <Clock /> : null
+        }
+        <button onClick={() =>setShowClock(!showClock)}>{showClock?'显示':"不显示"}</button>
     </div>
   );
 }

@@ -301,7 +301,13 @@ React 有十分强大的组合模式。推荐使用组合而非继承来实现�
 参考extendtest.js
 
 
-# hook
+# hook [link](https://react.docschina.org/docs/hooks-intro.html)
+
+Hook 是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。
+
+如果你熟悉 React class 的生命周期函数，你可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。
+
+参考hook.js
 
 
 # 拷贝
