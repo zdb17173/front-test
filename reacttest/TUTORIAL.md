@@ -296,6 +296,12 @@ class EssayForm extends React.Component {
 
 # 组合和继承
 
+React 有十分强大的组合模式。推荐使用组合而非继承来实现组件间的代码重用。
+
+参考extendtest.js
+
+
+# hook
 
 
 # 拷贝

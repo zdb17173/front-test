@@ -10,6 +10,7 @@ import Toggle from './Toggle';
 import NumberList from './list';
 import Calculator from './Temperature'
 import Extendtest from './extendtest'
+import Hook from './hook'
 
 
 const numbers = [
@@ -35,6 +36,8 @@ ReactDOM.render(
   <Calculator />
   <h2>组合和继承</h2>
   <Extendtest />
+  <h2>hook</h2>
+  <Hook />
   </div>,
   document.getElementById('root'),
 );
